@@ -7,7 +7,7 @@ export const SignupPage = () => {
     return (
         <>
             <h1> Hello Signup Page!</h1>
-            <Link to="/login">Login</Link>
+            <Link href="/login">Login</Link>
             {/* <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} /> */}
         </>
     );
