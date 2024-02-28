@@ -29,7 +29,7 @@ body {
   color: #121212;
 }
 
-textarea,
+/* textarea,
 input,
 button {
   font-size: 1rem;
@@ -41,7 +41,7 @@ button {
   background-color: white;
   line-height: 1.5;
   margin: 0;
-}
+} */
 
 button {
   color: #3992ff;

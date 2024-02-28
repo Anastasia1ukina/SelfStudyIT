@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './index.css'
+//import './index.css'
 // import Layout from './routes/Layout'
 // import LoginAction from './routes/LoginAction'
 // import LoginLoader from './routes/LoginLoader'
