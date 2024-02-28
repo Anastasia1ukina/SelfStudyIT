@@ -14,16 +14,24 @@ import Grid from '@mui/material/Grid';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const defaultTheme = createTheme();
 
 export const LoginPage = () => {
-    // return (
-    //     <>
-    //         <h1> Hello Login Page!</h1>
-    //         <Link to="/signup">Sign Up</Link>
-    //     </>
-    // );
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -41,8 +49,8 @@ export const LoginPage = () => {
                     <Grid
                         item
                         xs={false}
-                        sm={4}
-                        md={7}
+                        sm={false}
+                        md={6}
                         sx={{
                             backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
                             backgroundRepeat: 'no-repeat',
@@ -52,7 +60,7 @@ export const LoginPage = () => {
                             backgroundPosition: 'center',
                         }}
                     />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
+                    <Grid item xs={12} sm={12} md={6} component={Paper} elevation={0} square>
                         <Box
                             sx={{
                                 my: 8,
@@ -79,7 +87,8 @@ export const LoginPage = () => {
                                     autoComplete="email"
                                     autoFocus
                                 />
-                                <TextField
+                                <FormControl
+                                    variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
@@ -88,7 +97,26 @@ export const LoginPage = () => {
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
-                                />
+                                >
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    // onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        label="Password"
+                                    />
+                                </FormControl>
                                 <FormControlLabel
                                     control={<Checkbox value="remember" color="primary" />}
                                     label="Remember me"
