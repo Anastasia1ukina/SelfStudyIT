@@ -13,12 +13,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Input from "@mui/material/Input";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -29,28 +26,17 @@ export const LoginPage = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  console.log(watch());
 
-  // const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //         email: data.get('email'),
-  //         password: data.get('password'),
-  //     });
-  // };
+  const onSubmit = (data) => {
+    console.log("React hook form data", data);
+  };
 
   return (
     <>
@@ -93,90 +79,62 @@ export const LoginPage = () => {
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                {/* <LockOutlinedIcon /> */}
               </Avatar>
               <Typography component="h1">Sign in</Typography>
               <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit((data) => {
-                  console.log(data);
-                })}
+                onSubmit={handleSubmit(onSubmit)}
                 sx={{ mt: 1 }}
               >
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  {...register("email", { required: "This is required." })}
-                  autoComplete="email"
-                  autoFocus
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      margin="normal"
+											variant="standard"
+                      fullWidth
+                      label="Email Address"
+                      autoComplete="email"
+                      autoFocus
+                    />
+                  )}
                 />
-                <TextField
-                  margin="normal"
-                  fullWidth
-									variant="standard"
-                  id="password"
-                  label="Password"
-                  // {...register("email", { required: "This is required." })}
-                  // autoComplete="email"
-                  // autoFocus
-                  InputProps={{
-                    type: showPassword ? "text" : "password",
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          // onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      margin="normal"
+                      fullWidth
+                      variant="standard"
+                      label="Password"
+                      InputProps={{
+                        type: showPassword ? "text" : "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              // onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
                 />
-                <p>{errors.email?.message}</p>
-                <FormControl
-                  variant="standard"
-                  margin="normal"
-                  fullWidth
-                  {...register("password", {
-                    required: "This is required.",
-                    minLength: {
-                      value: 4,
-                      message: "Min length is 4",
-                    },
-                  })}
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                >
-                  <InputLabel htmlFor="st-adornment-password">
-                    Password
-                  </InputLabel>
-                  <Input
-                    id="st-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          // onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Password"
-                  />
-                  <p>{errors.password?.message}</p>
-                </FormControl>
+
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
