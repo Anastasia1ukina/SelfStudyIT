@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useForm } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
@@ -29,18 +30,29 @@ export const LoginPage = () => {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm({
+        defaultValues: {
+            email: "",
+            password: ""
+        }
+    });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    console.log(watch());
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     console.log({
+    //         email: data.get('email'),
+    //         password: data.get('password'),
+    //     });
+    // };
+
     return (
         <>
             <ThemeProvider theme={defaultTheme}>
@@ -76,23 +88,30 @@ export const LoginPage = () => {
                             <Typography component="h1">
                                 Sign in
                             </Typography>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                            <Box component="form" noValidate onSubmit={handleSubmit((data) => {
+                                console.log(data)
+                            })} sx={{ mt: 1 }}>
                                 <TextField
                                     margin="normal"
-                                    required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
-                                    name="email"
+                                    {...register("email", { required: "This is required." })}
                                     autoComplete="email"
                                     autoFocus
                                 />
+                                <p>{errors.email?.message}</p>
                                 <FormControl
                                     variant="outlined"
                                     margin="normal"
-                                    required
                                     fullWidth
-                                    name="password"
+                                    {...register("password", {
+                                        required: "This is required.",
+                                        minLength: {
+                                            value: 4,
+                                            message: "Min length is 4"
+                                        }
+                                    })}
                                     label="Password"
                                     type="password"
                                     id="password"
@@ -116,6 +135,7 @@ export const LoginPage = () => {
                                         }
                                         label="Password"
                                     />
+                                    <p>{errors.password?.message}</p>
                                 </FormControl>
                                 <FormControlLabel
                                     control={<Checkbox value="remember" color="primary" />}
