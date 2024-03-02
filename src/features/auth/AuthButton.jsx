@@ -1,8 +1,8 @@
-import { Button } from "@mui/material"
+import Button from "@mui/material/Button";
 
 
 export const AuthButton = ({ isAuth, setIsAuth }) => {
-    return <Button onClick={() => setIsAuth(!isAuth)}>
-        {isAuth ? 'logout' : 'login'}
+    return <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => setIsAuth(!isAuth)}>
+        {isAuth ? 'Sign Out' : 'Sign In'}
     </Button>
 }

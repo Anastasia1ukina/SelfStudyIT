@@ -1,7 +1,7 @@
 import AuthenticatedRouter from './AuthenticatedRouter';
 import UnauthenticatedRouter from './UnauthenticatedRouter';
 import { useAuth } from '../features/auth/useAuth';
-import { AuthButton } from '../features/auth/AuthButton';
+// import { AuthButton } from '../features/auth/AuthButton';
 import { useEffect } from 'react';
 
 function AppRouter() {
@@ -14,7 +14,7 @@ function AppRouter() {
     }
     return <>
         <UnauthenticatedRouter />
-        <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} />
+        {/* <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} /> */}
     </>;
 }
 
