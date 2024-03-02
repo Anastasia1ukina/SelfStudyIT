@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
@@ -30,10 +30,8 @@ export const LoginPage = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const {
-    register,
+    control,
     handleSubmit,
-    watch,
-    formState: { errors },
   } = useForm({
     defaultValues: {
       email: "",
@@ -43,14 +41,9 @@ export const LoginPage = () => {
 
   console.log(watch());
 
-  // const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //         email: data.get('email'),
-  //         password: data.get('password'),
-  //     });
-  // };
+  const onSubmit = (data) => {
+      console.log("React hook form", data);
+  };
 
   return (
     <>
@@ -99,9 +92,7 @@ export const LoginPage = () => {
               <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit((data) => {
-                  console.log(data);
-                })}
+                onSubmit={handleSubmit(onSubmit)}
                 sx={{ mt: 1 }}
               >
                 <TextField
