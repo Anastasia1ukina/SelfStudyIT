@@ -1,32 +1,23 @@
 // import { Link } from 'react-router-dom';
-import { AuthButton } from '../../features/auth/AuthButton';
-import { useAuth } from '../../features/auth/useAuth';
-
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, Controller } from "react-hook-form";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { PasswordField } from './PasswordField';
+import { Button } from '@mui/material';
 
 const defaultTheme = createTheme();
 
 export const SignupPage = () => {
-    const [isAuth, setIsAuth] = useAuth();
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const { control, handleSubmit } = useForm({
         defaultValues: {
@@ -95,6 +86,10 @@ export const SignupPage = () => {
                                 <Controller
                                     name="firstName"
                                     control={control}
+                                    rules={{
+                                        required: true,
+                                        minLength: 2
+                                    }}
                                     render={({ field }) => (
                                         <TextField
                                             {...field}
@@ -141,62 +136,14 @@ export const SignupPage = () => {
                                     name="password"
                                     control={control}
                                     render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            margin="normal"
-                                            fullWidth
-                                            variant="standard"
-                                            label="Password"
-                                            InputProps={{
-                                                type: showPassword ? "text" : "password",
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowPassword}
-                                                            edge="end"
-                                                        >
-                                                            {showPassword ? (
-                                                                <VisibilityOff />
-                                                            ) : (
-                                                                <Visibility />
-                                                            )}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                        />
+                                        <PasswordField field={field} label="Password" />
                                     )}
                                 />
                                 <Controller
                                     name="confirmedPassword"
                                     control={control}
                                     render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            margin="normal"
-                                            fullWidth
-                                            variant="standard"
-                                            label="Confirmed password"
-                                            InputProps={{
-                                                type: showPassword ? "text" : "confirmedPassword",
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle confirmedPassword visibility"
-                                                            onClick={handleClickShowPassword}
-                                                            edge="end"
-                                                        >
-                                                            {showPassword ? (
-                                                                <VisibilityOff />
-                                                            ) : (
-                                                                <Visibility />
-                                                            )}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                        />
+                                        <PasswordField field={field} label="Confirmed Password" />
                                     )}
                                 />
 
@@ -204,7 +151,12 @@ export const SignupPage = () => {
                                     control={<Checkbox value="remember" color="primary" />}
                                     label="Remember me"
                                 />
-                                <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >Sign Up</Button>
                             </Box>
                         </Box>
                     </Grid>

@@ -14,7 +14,6 @@ function AppRouter() {
     }
     return <>
         <UnauthenticatedRouter />
-        {/* <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} /> */}
     </>;
 }
 

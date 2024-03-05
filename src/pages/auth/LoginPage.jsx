@@ -141,15 +141,14 @@ export const LoginPage = () => {
                                     control={<Checkbox value="remember" color="primary" />}
                                     label="Remember me"
                                 />
-                                {/* <Button
+                                <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
                                 >
                                     Sign In
-                                </Button> */}
-                                <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} />
+                                </Button>
                                 <Grid container>
                                     <Grid item xs>
                                         <Link href="#" variant="body2">
