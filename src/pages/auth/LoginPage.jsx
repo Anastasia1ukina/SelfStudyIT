@@ -1,5 +1,3 @@
-// import { Link } from 'react-router-dom';
-
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,11 +16,17 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useAuth } from '../../features/auth/useAuth';
-import { AuthButton } from '../../features/auth/AuthButton';
+import { Button } from '@mui/material';
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export const LoginPage = () => {
+
+    const navigate = useNavigate();
+
     const [isAuth, setIsAuth] = useAuth();
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -38,6 +42,20 @@ export const LoginPage = () => {
 
     const onSubmit = (data) => {
         console.log("React hook form data", data);
+        const {email, password} = data;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                navigate("/")
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+            });
     };
 
     return (

@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,11 +14,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, Controller } from "react-hook-form";
 import { PasswordField } from './PasswordField';
 import { Button } from '@mui/material';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const defaultTheme = createTheme();
 
 export const SignupPage = () => {
-
+    const navigate = useNavigate();
+    
     const { control, handleSubmit } = useForm({
         defaultValues: {
             firstName: "",
@@ -30,8 +33,24 @@ export const SignupPage = () => {
     });
 
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log("React hook form data", data);
+        const { email, password } = data;
+
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user);
+                navigate("/login")
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                // ..
+            });
     };
 
     return (
