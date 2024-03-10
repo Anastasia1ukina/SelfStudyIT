@@ -147,16 +147,25 @@ export const SignupPage = () => {
                                 <Controller
                                     name="email"
                                     control={control}
+                                    rules={{ required: true, pattern: /^\S+@\S+$/i }}
                                     render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            margin="normal"
-                                            variant="standard"
-                                            fullWidth
-                                            label="Email Address"
-                                            autoComplete="email"
-                                            autoFocus
-                                        />
+                                        <div>
+                                            <TextField
+                                                {...field}
+                                                margin="normal"
+                                                variant="standard"
+                                                fullWidth
+                                                label="Email Address"
+                                                autoComplete="email"
+                                                autoFocus
+                                            />
+                                            {errors.email && errors.email.type === 'required' && (
+                                                <span>This field is required</span>
+                                            )}
+                                            {errors.email && errors.email.type === 'pattern' && (
+                                                <span>Invalid email address</span>
+                                            )}
+                                        </div>
                                     )}
                                 />
                                 <Controller
