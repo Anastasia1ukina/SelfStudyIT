@@ -21,8 +21,8 @@ const defaultTheme = createTheme();
 
 export const SignupPage = () => {
     const navigate = useNavigate();
-    
-    const { control, handleSubmit } = useForm({
+
+    const { control, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -103,22 +103,30 @@ export const SignupPage = () => {
                                 sx={{ mt: 1 }}
                             >
                                 <Controller
-                                    name="firstName"
+                                    name="username"
                                     control={control}
                                     rules={{
                                         required: true,
                                         minLength: 2
                                     }}
                                     render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            margin="normal"
-                                            variant="standard"
-                                            fullWidth
-                                            label="First name"
-                                            autoComplete="first name"
-                                            autoFocus
-                                        />
+                                        <div>
+                                            <TextField
+                                                {...field}
+                                                margin="normal"
+                                                variant="standard"
+                                                fullWidth
+                                                label="First name"
+                                                autoComplete="first name"
+                                                autoFocus
+                                            />
+                                            {errors.username && errors.username.type === 'required' && (
+                                                <span>This field is required</span>
+                                            )}
+                                            {errors.username && errors.username.type === 'minLength' && (
+                                                <span>Username must be at least 3 characters long</span>
+                                            )}
+                                        </div>
                                     )}
                                 />
                                 <Controller
@@ -154,15 +162,36 @@ export const SignupPage = () => {
                                 <Controller
                                     name="password"
                                     control={control}
+                                    rules={{ required: true, minLength: 6 }}
                                     render={({ field }) => (
-                                        <PasswordField field={field} label="Password" />
+                                        <div>
+                                            <PasswordField field={field} label="Password" />
+                                            {errors.password && errors.password.type === 'required' && (
+                                                <span>This field is required</span>
+                                            )}
+                                            {errors.password && errors.password.type === 'minLength' && (
+                                                <span>Password must be at least 6 characters long</span>
+                                            )}
+                                        </div>
                                     )}
                                 />
                                 <Controller
                                     name="confirmedPassword"
                                     control={control}
+                                    rules={{
+                                        required: true,
+                                        validate: value => value === watch("password")
+                                    }}
                                     render={({ field }) => (
-                                        <PasswordField field={field} label="Confirmed Password" />
+                                        <div>
+                                            <PasswordField field={field} label="Confirmed Password" />
+                                            {errors.confirmedPassword && errors.confirmedPassword.type === 'required' && (
+                                                <span>This field is required</span>
+                                            )}
+                                            {errors.confirmedPassword && errors.confirmedPassword.type === 'validate' && (
+                                                <span>Passwords do not match</span>
+                                            )}
+                                        </div>
                                     )}
                                 />
 

@@ -42,16 +42,20 @@ export const LoginPage = () => {
 
     const onSubmit = (data) => {
         console.log("React hook form data", data);
-        const {email, password} = data;
+        const { email, password } = data;
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                navigate("/")
+                const token = user && user.getIdToken();
+
+                localStorage.setItem('userToken', token);
+                navigate("/home")
                 console.log(user);
             })
             .catch((error) => {
+                alert("Неверный логин или пароль");
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage)
