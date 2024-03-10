@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -16,6 +15,7 @@ import { PasswordField } from './PasswordField';
 import { Button } from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import Stack from '@mui/material/Stack';
 
 const defaultTheme = createTheme();
 
@@ -24,7 +24,7 @@ export const SignupPage = () => {
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
-            firstName: "",
+            username: "",
             lastName: "",
             email: "",
             password: "",
@@ -57,7 +57,6 @@ export const SignupPage = () => {
         <>
             <ThemeProvider theme={defaultTheme}>
                 <Grid container component="main" sx={{ height: "100vh" }}>
-                    <CssBaseline />
                     <Grid
                         item
                         xs={false}
@@ -84,14 +83,11 @@ export const SignupPage = () => {
                         elevation={0}
                         square
                     >
-                        <Box
-                            sx={{
-                                my: 8,
-                                mx: 16,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                            }}
+                        <Stack
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}
                         >
                             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                             </Avatar>
@@ -215,7 +211,7 @@ export const SignupPage = () => {
                                     sx={{ mt: 3, mb: 2 }}
                                 >Sign Up</Button>
                             </Box>
-                        </Box>
+                        </Stack>
                     </Grid>
                 </Grid>
             </ThemeProvider>
