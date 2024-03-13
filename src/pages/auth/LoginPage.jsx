@@ -19,13 +19,15 @@ import { Button } from "@mui/material";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../../features/utils/useLocalStorage";
+import { useContext } from "react";
+import { AuthContext } from "../../features/auth/AuthContext";
 
 const defaultTheme = createTheme();
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-
-  const [isAuth, setIsAuth] = useAuth();
+  const {authValue, setAuthValue} = useContext(AuthContext);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -46,9 +48,7 @@ export const LoginPage = () => {
         // Signed in
         const user = userCredential.user;
 
-        localStorage.setItem("token", user.accessToken);
-
-        navigate("/home");
+        setAuthValue({token: user.accessToken});
         console.log(user);
       })
       .catch((error) => {
@@ -91,11 +91,11 @@ export const LoginPage = () => {
           >
             <Box
               sx={{
-                my: 8,
-                mx: 16,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
+                height: "100vh"
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
@@ -104,7 +104,11 @@ export const LoginPage = () => {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit(onSubmit)}
-                sx={{ mt: 1 }}
+                sx={{ 
+                  mt: 1,
+                  width: "90%",
+                  maxWidth: "500px"
+                }}
               >
                 <Controller
                   name="email"
