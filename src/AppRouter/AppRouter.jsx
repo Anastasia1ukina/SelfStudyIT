@@ -15,10 +15,14 @@ function AppRouter() {
     console.log({ authValue, localStorageAuth });
   }, [authValue, localStorageAuth]);
   if (authValue?.token) {
-    return <AuthenticatedRouter />;
+    return (
+      <AuthContext.Provider value={{ authValue, setAuthValue }}>
+        <AuthenticatedRouter />
+      </AuthContext.Provider>
+    );
   }
   return (
-    <AuthContext.Provider value={{authValue, setAuthValue}}>
+    <AuthContext.Provider value={{ authValue, setAuthValue }}>
       <UnauthenticatedRouter />
     </AuthContext.Provider>
   );

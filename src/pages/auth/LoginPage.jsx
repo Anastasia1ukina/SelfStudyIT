@@ -27,7 +27,7 @@ const defaultTheme = createTheme();
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const {authValue, setAuthValue} = useContext(AuthContext);
+  const { authValue, setAuthValue } = useContext(AuthContext);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -48,7 +48,11 @@ export const LoginPage = () => {
         // Signed in
         const user = userCredential.user;
 
-        setAuthValue({token: user.accessToken});
+        setAuthValue({
+          token: user.accessToken,
+          // email: user.email,
+          uid: user.uid,
+        });
         console.log(user);
       })
       .catch((error) => {
@@ -95,7 +99,7 @@ export const LoginPage = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "100vh"
+                height: "100vh",
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
@@ -104,10 +108,10 @@ export const LoginPage = () => {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit(onSubmit)}
-                sx={{ 
+                sx={{
                   mt: 1,
                   width: "90%",
-                  maxWidth: "500px"
+                  maxWidth: "500px",
                 }}
               >
                 <Controller
