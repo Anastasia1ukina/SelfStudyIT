@@ -50,7 +50,7 @@ export const LoginPage = () => {
 
         setAuthValue({
           token: user.accessToken,
-          // email: user.email,
+          email: user.email,
           uid: user.uid,
         });
         console.log(user);

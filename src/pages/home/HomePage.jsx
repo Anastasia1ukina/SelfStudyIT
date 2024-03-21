@@ -9,20 +9,25 @@ import { AuthContext } from "../../features/auth/AuthContext";
 export const HomePage = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
 
-//   useEffect(() => {
-//     getUserData();
-//   }, []);
+  //   useEffect(() => {
+  //     getUserData();
+  //   }, []);
 
   const resetAuth = () => {
     setAuthValue(null);
   };
 
+  // const userData = localStorage.getItem(
+  //   "firebase:authUser:AIzaSyCbeZ_RKH2WvK2RnRLDvH5SSLlDZIUmNa4:[DEFAULT]"
+  // );
+  const userEmail = authValue.email;
+  // const userDataParsed = JSON.parse(userData);
+  // const userEmail = userDataParsed.email;
+
   return (
     <>
-      <h1>Hello!</h1>
-      <Link href="/login" variant="body2">
-        {"Let's login again!"}
-      </Link>
+      <h1>Домашняя страница</h1>
+      <p>Вы вошли в систему как: {userEmail}</p>
       <Button
         onClick={resetAuth}
         type="submit"
