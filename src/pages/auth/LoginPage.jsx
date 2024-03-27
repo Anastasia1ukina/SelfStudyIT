@@ -16,12 +16,17 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useAuth } from "../../features/auth/useAuth";
 import { Button } from "@mui/material";
-import { auth } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, provider } from "../../firebase";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../../features/utils/useLocalStorage";
 import { useContext } from "react";
 import { AuthContext } from "../../features/auth/AuthContext";
+import { GoogleButton } from "react-google-button";
 
 const defaultTheme = createTheme();
 
@@ -38,6 +43,26 @@ export const LoginPage = () => {
       password: "",
     },
   });
+
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((userCredential) => {
+        const {user} = GoogleAuthProvider.credentialFromResult(userCredential);
+
+        setAuthValue({
+          token: user.stsTokenManager.accessToken,
+          email: user.email,
+          uid: user.uid,
+          name: user.displayName,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
 
   const onSubmit = (data) => {
     console.log("React hook form data", data);
@@ -146,7 +171,6 @@ export const LoginPage = () => {
                             <IconButton
                               aria-label="toggle password visibility"
                               onClick={handleClickShowPassword}
-                              // onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
                               {showPassword ? (
@@ -185,6 +209,9 @@ export const LoginPage = () => {
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
+                </Grid>
+                <Grid container>
+                  <GoogleButton onClick={googleSignIn} type="light" />
                 </Grid>
               </Box>
             </Box>
