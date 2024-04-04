@@ -10,6 +10,7 @@ import {
   Divider,
   Box,
   IconButton,
+  Link as MuiLink,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -88,8 +89,15 @@ export const Header = () => {
             </Stack>
           </ListItem>
           <Divider></Divider>
-          <ListItem>Dashboard</ListItem>
-          <ListItem>About</ListItem>
+          <ListItem>
+            <MuiLink href="/dashboard">Dashboard</MuiLink>
+          </ListItem>
+          <ListItem>
+            <MuiLink href="#">About</MuiLink>
+          </ListItem>
+          <ListItem>
+            <MuiLink href="#">About</MuiLink>
+          </ListItem>
         </List>
       </Popover>
     </Stack>

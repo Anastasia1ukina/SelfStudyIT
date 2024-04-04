@@ -1,5 +1,4 @@
 import * as React from "react";
-import { AuthLayout } from "../../layout/AuthLayout";
 
 const Home = () => {
   return <h1>Домашняя страница</h1>;
@@ -8,10 +7,7 @@ const Home = () => {
 export const HomePage = () => {
   return (
     <>
-      <AuthLayout>
-        <Home />
-      </AuthLayout>
-      <h1>Домашняя страница</h1>
+      <Home />
     </>
   );
 };
