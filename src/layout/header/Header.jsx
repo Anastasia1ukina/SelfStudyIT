@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../features/auth/AuthContext";
 import profileImage from "../../assets/fiona.jpg";
 import { Link } from "react-router-dom";
+import { TypeWriterText } from "../../components/typeWriterText/TypeWriterText";
 
 export const Header = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
@@ -48,7 +49,7 @@ export const Header = () => {
       spacing={1}
       sx={{ p: 6 }}
     >
-      <p>logo</p>
+      <TypeWriterText>Hello awesome App!</TypeWriterText>
       <Avatar
         onClick={handleClick}
         alt="profile"

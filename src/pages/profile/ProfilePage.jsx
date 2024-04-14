@@ -1,13 +1,11 @@
 import * as React from "react";
-
-const Profile = () => {
-  return <h1>Профиль</h1>;
-};
+import { AuthLayout } from "../../layout/AuthLayout";
+import { ProfileAvatar } from "./ProfileAvatar";
 
 export const ProfilePage = () => {
   return (
-    <>
-      <Profile />
-    </>
+    <AuthLayout>
+      <ProfileAvatar />
+    </AuthLayout>
   );
 };

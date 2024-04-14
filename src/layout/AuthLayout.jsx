@@ -1,15 +1,15 @@
 import * as React from "react";
-import { Stack } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import { Header } from "./header/Header";
 
 export const AuthLayout = (props) => {
-    console.log(props.children)
+  console.log(props.children);
   return (
     <Stack direction="column">
-        <Header></Header>
-        <main>
-            {props.children}
-        </main>
+      <Header></Header>
+      <main>
+        <Box sx={{px: 6}}>{props.children}</Box>
+      </main>
     </Stack>
-  )
+  );
 };
