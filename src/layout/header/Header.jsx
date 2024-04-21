@@ -84,7 +84,7 @@ export const Header = () => {
                 <Typography variant="h6">Anna Hello</Typography>
                 <Typography>{userEmail}</Typography>
               </Box>
-              <IconButton size="small">
+              <IconButton onClick={resetAuth} type="submit" size="small">
                 <LogoutIcon />
               </IconButton>
             </Stack>
