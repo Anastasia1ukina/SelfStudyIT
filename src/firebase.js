@@ -20,13 +20,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
-// setPersistence(auth, browserLocalPersistence)
-//   .then(() => {
-//     console.log("Local persistence successfully set");
-//     // return signInWithEmailAndPassword(auth, email, password);
-//   })
-//   .catch((error) => {
-//     console.error("Error setting local persistence:", error);
-//   });
-
 export default app;
