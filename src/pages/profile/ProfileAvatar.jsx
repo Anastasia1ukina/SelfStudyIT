@@ -7,34 +7,18 @@ import { AuthContext } from "../../features/auth/AuthContext";
 import { useContext, useEffect } from "react";
 import { PasswordField } from "../auth/PasswordField";
 import { getAuth, updateProfile, updatePassword } from "firebase/auth";
+import useAuth from "../../hooks/useAuth";
 
 export const ProfileAvatar = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
-  const auth = getAuth();
-  const user = auth.currentUser;
+  // const auth = getAuth();
+  const { pending, user, auth } = useAuth()
+  // const user = auth.currentUser;
   const [profileImageUrl, setProfileImageUrl] = React.useState(user?.photoURL || "");
 
   useEffect(() => {
-    console.log(auth.currentUser, "currentUser")
-  }, [auth.currentUser])
-
-  // if (user !== null) {
-  //   const displayName = user.displayName;
-  //   const userEmail = user.email;
-  //   const photoURL = user.photoURL;
-  //   const emailVerified = user.emailVerified;
-  //   const uid = user.uid;
-  // }
-
-  // const resetAuth = () => {
-  //   setAuthValue(null);
-  // };
-
-  // const userName = authValue.username;
-  // const lastName = authValue.lastName;
-  // const userEmail = user.email;
-  // const userEmail = authValue.email;
-  // const userPassword = authValue.password;
+    console.log(user, "currentUser")
+  }, [user])
 
   const { control, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
@@ -76,6 +60,10 @@ export const ProfileAvatar = () => {
       await updateProfilePassword(profileFormData.newPassword);
     }
   };
+
+  if (pending) {
+    return <h1>waiting...</h1>
+  }
 
   return (
     <Box
