@@ -1,52 +1,47 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
-import { Typography, Modal, Box, Button } from "@mui/material";
-import {Test} from "../../features/tests/FirstTest";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-};
+import { Typography, Button } from "@mui/material";
+import { test } from "../../features/tests/FirstTest";
 
 export const HomePage = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [testFinished, setTestFinished] = useState(false);
 
+  const handleAnswer = (optionId) => {
+    const currentQuestion = test.questions[currentQuestionIndex]
+
+    test.answerQuestion({
+      value: currentQuestion.options[optionId].value,
+      id: currentQuestion.id,
+      optionId: optionId,
+    });
+
+    const isCurrentIndexLessThanLast = currentQuestionIndex < test.questions.length - 1;
+
+    if (isCurrentIndexLessThanLast) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+
+    if (currentQuestionIndex === test.questions.length - 1) {
+      setTestFinished(true)
+    }
+  };
+
+  if (testFinished) {
+    return (
+      <AuthLayout>
+        <Typography variant="h5">No more questions!</Typography>
+      </AuthLayout>
+    )
+  }
   return (
     <AuthLayout>
-      <div>
-        <Button onClick={handleOpen}>Get Tested</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Box id="buttons"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-            </Box>
-          </Box>
-        </Modal>
-      </div>
+      <Typography variant="h5">{test.questions[currentQuestionIndex].text}</Typography>
+      {test.questions[currentQuestionIndex].options.map((option, index) => (
+        <Button key={option.id} onClick={() => handleAnswer(index)}>
+          {option.label}
+        </Button>
+      ))}
     </AuthLayout>
   );
 };

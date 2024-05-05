@@ -1,4 +1,4 @@
-export class Test {
+class Test {
   constructor({ questions } = { questions: [] }) {
     this.questions = questions
     this.answers = []
@@ -31,16 +31,30 @@ const question = {
   options: [{ id: 0, label: "3", value: 0 }, { id: 1, label: "5", value: 1 }],
 }
 
-const questions = [question]
+const question2 = {
+  id: 2,
+  text: "What is 5 + 5?",
+  options: [{ id: 0, label: "10", value: 0 }, { id: 1, label: "6", value: 1 }],
+}
+
+const question3 = {
+  id: 3,
+  text: "What is 6 + 6?",
+  options: [{ id: 0, label: "12", value: 0 }, { id: 1, label: "2", value: 1 }],
+}
+
+const questions = [question, question2, question3]
 
 // Пример использования класса Test
-const test = new Test({ questions });
+export const test = new Test({ questions });
+
+// export default new Test();
 
 // Получение следующего вопроса
-console.log(test.nextQuestion());
+// console.log(test.nextQuestion());
 
 // Ответ на второй вопрос
-test.answerQuestion({ value: 0, id: 1, optionId: 0 });
+// test.answerQuestion({ value: 0, id: 1, optionId: 0 });
 
 // Получение результатов
-console.log(test.getResult(), test);
+// console.log(test.getResult(), test);

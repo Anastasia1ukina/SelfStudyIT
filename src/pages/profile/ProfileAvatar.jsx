@@ -81,7 +81,6 @@ export const ProfileAvatar = () => {
         mr: "auto",
         padding: "30px 40px",
         backgroundColor: "#f5f5f5",
-        width: "90%",
         maxWidth: "500px",
       }}
     >
