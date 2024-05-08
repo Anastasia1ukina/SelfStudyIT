@@ -2,6 +2,7 @@ class Test {
   constructor({ questions } = { questions: [] }) {
     this.questions = questions
     this.answers = []
+    this.correctAnswers = []
     this.currentQuestionIndex = 0
   }
 
@@ -17,11 +18,21 @@ class Test {
   }
 
   answerQuestion({ value, id, optionId }) {
+    const currentQuestion = this.questions[this.currentQuestionIndex];
+    const correctOptionIndex = currentQuestion.options.findIndex(option => option.value === 1);
+    if (optionId === correctOptionIndex) {
+      this.correctAnswers.push(this.currentQuestionIndex);
+    }
+
     this.answers.push({ value, id, optionId });
   }
 
   getResult() {
     return this.answers.reduce((sum, { value }) => sum + value, 0);
+  }
+
+  getCorrectAnswersCount() {
+    return this.correctAnswers.length;
   }
 }
 
@@ -34,13 +45,13 @@ const question = {
 const question2 = {
   id: 2,
   text: "What is 5 + 5?",
-  options: [{ id: 0, label: "10", value: 0 }, { id: 1, label: "6", value: 1 }],
+  options: [{ id: 0, label: "6", value: 0 }, { id: 1, label: "10", value: 1 }],
 }
 
 const question3 = {
   id: 3,
   text: "What is 6 + 6?",
-  options: [{ id: 0, label: "12", value: 0 }, { id: 1, label: "2", value: 1 }],
+  options: [{ id: 0, label: "3", value: 0 }, { id: 1, label: "12", value: 1 }],
 }
 
 const questions = [question, question2, question3]

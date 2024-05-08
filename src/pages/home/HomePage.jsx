@@ -6,6 +6,7 @@ import { test } from "../../features/tests/FirstTest";
 export const HomePage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [testFinished, setTestFinished] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   const handleAnswer = (optionId) => {
     const currentQuestion = test.questions[currentQuestionIndex]
@@ -23,7 +24,9 @@ export const HomePage = () => {
     }
 
     if (currentQuestionIndex === test.questions.length - 1) {
-      setTestFinished(true)
+      setTestFinished(true);
+      const correctAnswers = test.getCorrectAnswersCount(); // получаем количество правильных ответов
+      setCorrectAnswersCount(correctAnswers);
     }
   };
 
@@ -31,6 +34,7 @@ export const HomePage = () => {
     return (
       <AuthLayout>
         <Typography variant="h5">No more questions!</Typography>
+        <Typography variant="h5">Correct answers: {correctAnswersCount}</Typography>
       </AuthLayout>
     )
   }
