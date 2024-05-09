@@ -18,6 +18,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+// auth.onAuthStateChanged(function (user) {
+//   if (user) {
+//    console.log(user, "firebase log")
+//   } else {
+//     console.log("no user")
+//   }
+// });
 export const provider = new GoogleAuthProvider();
 
 export default app;

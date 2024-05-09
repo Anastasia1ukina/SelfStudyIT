@@ -19,6 +19,7 @@ import { AuthContext } from "../../features/auth/AuthContext";
 import profileImage from "../../assets/fiona.jpg";
 import { Link } from "react-router-dom";
 import { TypeWriterText } from "../../components/typeWriterText/TypeWriterText";
+import { ProfileAvatar } from "../../pages/profile/ProfileAvatar";
 
 export const Header = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
@@ -50,12 +51,9 @@ export const Header = () => {
       sx={{ p: 6 }}
     >
       <TypeWriterText>Hello awesome App!</TypeWriterText>
-      <Avatar
-        onClick={handleClick}
-        alt="profile"
-        src={profileImage}
-        sx={{ cursor: "pointer", width: 56, height: 56 }}
-      ></Avatar>
+      <IconButton onClick={handleClick}>
+        <ProfileAvatar width={56} height={56} />
+      </IconButton>
       <Popover
         id={id}
         open={open}
@@ -75,11 +73,7 @@ export const Header = () => {
               component={Link}
               to="/profile"
             >
-              <Avatar
-                alt="profile"
-                src={profileImage}
-                sx={{ cursor: "pointer", width: 40, height: 40 }}
-              ></Avatar>
+              <ProfileAvatar width={40} height={40} />
               <Box>
                 <Typography variant="h6">Anna Hello</Typography>
                 <Typography>{userEmail}</Typography>

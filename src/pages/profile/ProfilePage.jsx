@@ -1,11 +1,11 @@
 import * as React from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
-import { ProfileAvatar } from "./ProfileAvatar";
+import { ProfileAvatarForm } from "./ProfileAvatarForm";
 
 export const ProfilePage = () => {
   return (
     <AuthLayout>
-      <ProfileAvatar />
+      <ProfileAvatarForm />
     </AuthLayout>
   );
 };

@@ -8,9 +8,10 @@ const useAuth = () => {
     })
 
     useEffect(() => {
-        const unregisterAuthObserver = auth.onAuthStateChanged(user =>
+        const unregisterAuthObserver = auth.onAuthStateChanged(user => {
             setAuthState({ user, pending: false })
-        )
+            console.log(user, "auth observer")
+        })
         return () => unregisterAuthObserver()
     }, [])
 
