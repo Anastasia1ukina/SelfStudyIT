@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Avatar, TextField, Box, Button, IconButton } from "@mui/material";
+import { Avatar, TextField, Box, Button, IconButton, Typography } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AuthContext } from "../../features/auth/AuthContext";
@@ -13,6 +13,7 @@ export const ProfileAvatarForm = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
   const { user, auth } = useAuth()
   const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || "");
+  const userEmail = authValue.email;
 
   const fileInputRef = useRef(null)
   const { control, handleSubmit, watch, formState: { errors } } = useForm({
@@ -75,9 +76,9 @@ export const ProfileAvatarForm = () => {
         maxWidth: "500px",
       }}
     >
-      <IconButton onClick={() => {fileInputRef?.current?.click()}}>
+      <IconButton onClick={() => { fileInputRef?.current?.click() }}>
         <ProfileAvatar width={150} height={150} photoURL={profileImageUrl} />
-        </IconButton>
+      </IconButton>
       <Controller
         name="profileImage"
         control={control}
@@ -101,7 +102,9 @@ export const ProfileAvatarForm = () => {
           );
         }}
       />
-      <Controller
+      <Typography variant="h6">Anna Hello</Typography>
+      <Typography>{userEmail}</Typography>
+      {/* <Controller
         name="email"
         control={control}
         render={({ field }) => (
@@ -117,7 +120,7 @@ export const ProfileAvatarForm = () => {
             readOnly
           />
         )}
-      />
+      /> */}
       {/* <Controller
         name="newPassword"
         control={control}

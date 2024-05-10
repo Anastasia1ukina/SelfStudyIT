@@ -11,6 +11,8 @@ import {
   Box,
   IconButton,
   Link as MuiLink,
+  createTheme,
+  ThemeProvider,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -42,6 +44,19 @@ export const Header = () => {
 
   const userEmail = authValue.email;
 
+  const theme = createTheme({
+    components: {
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            textDecoration: "none",
+            color: "black"
+          },
+        },
+      },
+    },
+  });
+
   return (
     <Stack
       direction="row"
@@ -64,36 +79,38 @@ export const Header = () => {
           horizontal: "right",
         }}
       >
-        <List>
-          <ListItem sx={{ display: "block" }}>
-            <Stack
-              direction="row"
-              spacing={1}
-              alignItems="center"
-              component={Link}
-              to="/profile"
-            >
-              <ProfileAvatar width={40} height={40} />
-              <Box>
-                <Typography variant="h6">Anna Hello</Typography>
-                <Typography>{userEmail}</Typography>
-              </Box>
-              <IconButton onClick={resetAuth} type="submit" size="small">
-                <LogoutIcon />
-              </IconButton>
-            </Stack>
-          </ListItem>
-          <Divider></Divider>
-          <ListItem>
-            <MuiLink href="/dashboard">Dashboard</MuiLink>
-          </ListItem>
-          <ListItem>
-            <MuiLink href="#">About</MuiLink>
-          </ListItem>
-          <ListItem>
-            <MuiLink href="#">About</MuiLink>
-          </ListItem>
-        </List>
+        <ThemeProvider theme={theme}>
+          <List>
+            <ListItem sx={{ display: "block" }}>
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                component={Link}
+                to="/profile"
+              >
+                <ProfileAvatar width={40} height={40} />
+                <Box>
+                  <Typography variant="h6">Anna Hello</Typography>
+                  <Typography>{userEmail}</Typography>
+                </Box>
+                <IconButton onClick={resetAuth} type="submit" size="small">
+                  <LogoutIcon />
+                </IconButton>
+              </Stack>
+            </ListItem>
+            <Divider></Divider>
+            <ListItem>
+              <MuiLink href="/dashboard">Dashboard</MuiLink>
+            </ListItem>
+            <ListItem>
+              <MuiLink href="#">About</MuiLink>
+            </ListItem>
+            <ListItem>
+              <MuiLink href="#">About</MuiLink>
+            </ListItem>
+          </List>
+        </ThemeProvider>
       </Popover>
     </Stack>
   );

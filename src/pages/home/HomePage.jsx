@@ -1,31 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import { test } from "../../features/tests/FirstTest";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  height: "50%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 5,
+  textAlign: "center"
+};
 
 export const HomePage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [testFinished, setTestFinished] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const allQuestions = test.questions.length;
 
-  const handleAnswer = (optionId) => {
-    const currentQuestion = test.questions[currentQuestionIndex]
+  const handleAnswer = (event) => {
+    const optionId = parseInt(event.target.value);
+    setSelectedOption(optionId);
+  };
 
+  const handleNextQuestion = () => {
+    const currentQuestion = test.questions[currentQuestionIndex];
     test.answerQuestion({
-      value: currentQuestion.options[optionId].value,
+      value: currentQuestion.options[selectedOption].value,
       id: currentQuestion.id,
-      optionId: optionId,
+      optionId: selectedOption,
     });
 
     const isCurrentIndexLessThanLast = currentQuestionIndex < test.questions.length - 1;
-
     if (isCurrentIndexLessThanLast) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedOption(null); // Сброс выбранного варианта ответа после перехода к следующему вопросу
     }
 
     if (currentQuestionIndex === test.questions.length - 1) {
       setTestFinished(true);
-      const correctAnswers = test.getCorrectAnswersCount(); // получаем количество правильных ответов
+      const correctAnswers = test.getCorrectAnswersCount();
       setCorrectAnswersCount(correctAnswers);
     }
   };
@@ -33,19 +56,50 @@ export const HomePage = () => {
   if (testFinished) {
     return (
       <AuthLayout>
-        <Typography variant="h5">No more questions!</Typography>
-        <Typography variant="h5">Correct answers: {correctAnswersCount}</Typography>
+        <Button onClick={handleOpen}>Open modal</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography variant="h5">No more questions!</Typography>
+            <Typography variant="h5">Correct answers: {correctAnswersCount}/{allQuestions}</Typography>
+          </Box>
+        </Modal>
       </AuthLayout>
     )
   }
+
   return (
     <AuthLayout>
-      <Typography variant="h5">{test.questions[currentQuestionIndex].text}</Typography>
-      {test.questions[currentQuestionIndex].options.map((option, index) => (
-        <Button key={option.id} onClick={() => handleAnswer(index)}>
-          {option.label}
-        </Button>
-      ))}
+      <Button onClick={handleOpen}>Get tested</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography variant="h5">{test.questions[currentQuestionIndex].text}</Typography>
+          <FormControl component="fieldset">
+            <RadioGroup value={selectedOption} onChange={handleAnswer}>
+              {test.questions[currentQuestionIndex].options.map((option, index) => (
+                <FormControlLabel
+                  key={option.id}
+                  value={index.toString()}
+                  control={<Radio />}
+                  label={option.label}
+                />
+              ))}
+            </RadioGroup>
+          </FormControl>
+          <Button onClick={handleNextQuestion} disabled={selectedOption === null}>
+            NEXT
+          </Button>
+        </Box>
+      </Modal>
     </AuthLayout>
   );
 };
