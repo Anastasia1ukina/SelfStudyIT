@@ -26,10 +26,21 @@ export const HomePage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const allQuestions = test.questions.length;
+  const isCurrentQuestionFirst = test.questions[0];
 
   const handleAnswer = (event) => {
     const optionId = parseInt(event.target.value);
     setSelectedOption(optionId);
+  };
+
+  const handlePreviousQuestion = () => {
+    const PreviousQuestion = test.questions[currentQuestionIndex-1];
+    console.log(PreviousQuestion, "текущий вопросек")
+
+    const isCurrentIndexLessThanLast = currentQuestionIndex < test.questions.length - 1;
+    if (isCurrentIndexLessThanLast) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
   };
 
   const handleNextQuestion = () => {
@@ -56,7 +67,7 @@ export const HomePage = () => {
   if (testFinished) {
     return (
       <AuthLayout>
-        <Button onClick={handleOpen}>Open modal</Button>
+        <Button onClick={handleOpen}>See result</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -95,6 +106,9 @@ export const HomePage = () => {
               ))}
             </RadioGroup>
           </FormControl>
+          <Button onClick={handlePreviousQuestion} disabled={test.questions[currentQuestionIndex] === isCurrentQuestionFirst}>
+            BACK
+          </Button>
           <Button onClick={handleNextQuestion} disabled={selectedOption === null}>
             NEXT
           </Button>
