@@ -22,11 +22,10 @@ export const HomePage = () => {
   const [testFinished, setTestFinished] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const allQuestions = test.questions.length;
-  const isCurrentQuestionFirst = test.questions[0];
 
   const handleAnswer = (event) => {
     const optionId = parseInt(event.target.value);
@@ -34,34 +33,29 @@ export const HomePage = () => {
   };
 
   const handlePreviousQuestion = () => {
-    const PreviousQuestion = test.questions[currentQuestionIndex-1];
-    console.log(PreviousQuestion, "текущий вопросек")
-
-    const isCurrentIndexLessThanLast = currentQuestionIndex < test.questions.length - 1;
-    if (isCurrentIndexLessThanLast) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
+    const previousQuestion = test.questions[currentQuestionIndex - 1];
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    setSelectedOption(test.answers[previousQuestion.id].optionId)
   };
 
   const handleNextQuestion = () => {
     const currentQuestion = test.questions[currentQuestionIndex];
+    const nextQuestion = test.questions[currentQuestionIndex + 1];
     test.answerQuestion({
       value: currentQuestion.options[selectedOption].value,
       id: currentQuestion.id,
       optionId: selectedOption,
     });
 
-    const isCurrentIndexLessThanLast = currentQuestionIndex < test.questions.length - 1;
-    if (isCurrentIndexLessThanLast) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // Сброс выбранного варианта ответа после перехода к следующему вопросу
-    }
-
     if (currentQuestionIndex === test.questions.length - 1) {
       setTestFinished(true);
       const correctAnswers = test.getCorrectAnswersCount();
       setCorrectAnswersCount(correctAnswers);
+      return;
     }
+
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setSelectedOption(test.answers[nextQuestion.id]?.optionId || null);
   };
 
   if (testFinished) {
@@ -106,7 +100,7 @@ export const HomePage = () => {
               ))}
             </RadioGroup>
           </FormControl>
-          <Button onClick={handlePreviousQuestion} disabled={test.questions[currentQuestionIndex] === isCurrentQuestionFirst}>
+          <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
             BACK
           </Button>
           <Button onClick={handleNextQuestion} disabled={selectedOption === null}>

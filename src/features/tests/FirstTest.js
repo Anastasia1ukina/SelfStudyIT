@@ -1,7 +1,7 @@
 class Test {
   constructor({ questions } = { questions: [] }) {
     this.questions = questions
-    this.answers = []
+    this.answers = {}
     this.correctAnswers = []
     this.currentQuestionIndex = 0
   }
@@ -18,21 +18,15 @@ class Test {
   }
 
   answerQuestion({ value, id, optionId }) {
-    const currentQuestion = this.questions[this.currentQuestionIndex];
-    const correctOptionIndex = currentQuestion.options.findIndex(option => option.value === 1);
-    if (optionId === correctOptionIndex) {
-      this.correctAnswers.push(this.currentQuestionIndex);
-    }
-
-    this.answers.push({ value, id, optionId });
+    this.answers[id]={value, optionId};
   }
 
   getResult() {
-    return this.answers.reduce((sum, { value }) => sum + value, 0);
+    return Object.values(this.answers).reduce((sum, { value }) => sum + value, 0);
   }
 
   getCorrectAnswersCount() {
-    return this.correctAnswers.length;
+    return Object.values(this.answers).filter(({value}) => value === 1 ).length;
   }
 }
 
