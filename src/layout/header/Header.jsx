@@ -50,7 +50,7 @@ export const Header = () => {
         styleOverrides: {
           root: {
             textDecoration: "none",
-            color: "black"
+            color: "lightpink"
           },
         },
       },
@@ -65,7 +65,18 @@ export const Header = () => {
       spacing={1}
       sx={{ p: 6 }}
     >
-      <TypeWriterText>Hello awesome App!</TypeWriterText>
+      {/* <MuiLink sx={{
+        maxWidth: "200px",
+        cursor: "pointer",
+        textDecoration: "none",
+        color: "black",
+        textDecorationColor: "black"
+      }}> */}
+        <TypeWriterText>Self Study IT</TypeWriterText>
+      {/* </MuiLink> */}
+      <Typography>// FRONT</Typography>
+      <Typography>streak 100 days</Typography>
+      <Typography>1000 xp</Typography>
       <IconButton onClick={handleClick}>
         <ProfileAvatar width={56} height={56} />
       </IconButton>
@@ -100,6 +111,9 @@ export const Header = () => {
               </Stack>
             </ListItem>
             <Divider></Divider>
+            <ListItem>
+              <MuiLink href="/home">Home</MuiLink>
+            </ListItem>
             <ListItem>
               <MuiLink href="/dashboard">Dashboard</MuiLink>
             </ListItem>

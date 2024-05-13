@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
 import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import { test } from "../../features/tests/FirstTest";
+import { BorderRight } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
@@ -14,7 +15,8 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 5,
-  textAlign: "center"
+  textAlign: "center",
+  borderRadius: 8
 };
 
 export const HomePage = () => {
@@ -100,12 +102,14 @@ export const HomePage = () => {
               ))}
             </RadioGroup>
           </FormControl>
-          <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
-            BACK
-          </Button>
-          <Button onClick={handleNextQuestion} disabled={selectedOption === null}>
-            NEXT
-          </Button>
+          <Box>
+            <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
+              BACK
+            </Button>
+            <Button onClick={handleNextQuestion} disabled={selectedOption === null}>
+              NEXT
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </AuthLayout>

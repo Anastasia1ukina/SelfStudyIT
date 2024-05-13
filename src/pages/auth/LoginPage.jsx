@@ -47,7 +47,7 @@ export const LoginPage = () => {
   const googleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((userCredential) => {
-        const {user} = GoogleAuthProvider.credentialFromResult(userCredential);
+        const { user } = GoogleAuthProvider.credentialFromResult(userCredential);
 
         setAuthValue({
           token: user.stsTokenManager.accessToken,
@@ -210,7 +210,10 @@ export const LoginPage = () => {
                     </Link>
                   </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container style={{
+                  marginTop: 30,
+                  justifyContent: "center"
+                }}>
                   <GoogleButton onClick={googleSignIn} type="light" />
                 </Grid>
               </Box>
