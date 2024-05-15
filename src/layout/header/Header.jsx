@@ -65,67 +65,67 @@ export const Header = () => {
       spacing={1}
       sx={{ p: 6 }}
     >
-      {/* <MuiLink sx={{
-        maxWidth: "200px",
-        cursor: "pointer",
-        textDecoration: "none",
-        color: "black",
-        textDecorationColor: "black"
-      }}> */}
-        <TypeWriterText>Self Study IT</TypeWriterText>
-      {/* </MuiLink> */}
-      <Typography>// FRONT</Typography>
-      <Typography>streak 100 days</Typography>
-      <Typography>1000 xp</Typography>
-      <IconButton onClick={handleClick}>
-        <ProfileAvatar width={56} height={56} />
-      </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <List>
-            <ListItem sx={{ display: "block" }}>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                component={Link}
-                to="/profile"
-              >
-                <ProfileAvatar width={40} height={40} />
-                <Box>
-                  <Typography variant="h6">Anna Hello</Typography>
-                  <Typography>{userEmail}</Typography>
-                </Box>
-                <IconButton onClick={resetAuth} type="submit" size="small">
-                  <LogoutIcon />
-                </IconButton>
-              </Stack>
-            </ListItem>
-            <Divider></Divider>
-            <ListItem>
-              <MuiLink href="/home">Home</MuiLink>
-            </ListItem>
-            <ListItem>
-              <MuiLink href="/dashboard">Dashboard</MuiLink>
-            </ListItem>
-            <ListItem>
-              <MuiLink href="#">About</MuiLink>
-            </ListItem>
-            <ListItem>
-              <MuiLink href="#">About</MuiLink>
-            </ListItem>
-          </List>
-        </ThemeProvider>
-      </Popover>
+      <TypeWriterText>
+        <Link to={"/"}>Self Study IT</Link>
+      </TypeWriterText>
+      <Stack
+        direction="row"
+        sx={{ width: "80vw" }}>
+        <Stack direction="row" sx={{ margin: "auto" }}>
+          <Typography>// FRONT</Typography>
+          <Typography>streak 100 days</Typography>
+          <Typography>1000 xp</Typography>
+        </Stack>
+        <IconButton onClick={handleClick}>
+          <ProfileAvatar width={56} height={56} />
+        </IconButton>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <List>
+              <ListItem sx={{ display: "block" }}>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  component={Link}
+                  to="/profile"
+                >
+                  <ProfileAvatar width={40} height={40} />
+                  <Box>
+                    <Typography variant="h6">Anna Hello</Typography>
+                    <Typography>{userEmail}</Typography>
+                  </Box>
+                  <IconButton onClick={resetAuth} type="submit" size="small">
+                    <LogoutIcon />
+                  </IconButton>
+                </Stack>
+              </ListItem>
+              <Divider></Divider>
+              <ListItem>
+                <MuiLink href="/home">Home</MuiLink>
+              </ListItem>
+              <ListItem>
+                <MuiLink href="/dashboard">Dashboard</MuiLink>
+              </ListItem>
+              <ListItem>
+                <MuiLink href="#">About</MuiLink>
+              </ListItem>
+              <ListItem>
+                <MuiLink href="#">About</MuiLink>
+              </ListItem>
+            </List>
+          </ThemeProvider>
+        </Popover>
+      </Stack>
     </Stack>
   );
 };

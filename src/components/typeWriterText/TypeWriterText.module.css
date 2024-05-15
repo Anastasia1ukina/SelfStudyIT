@@ -1,4 +1,5 @@
 .typewriter {
+    font-family: "DrukWide", "Arial", sans-serif;
     overflow: hidden;
     border-right: .15em solid orange;
     white-space: nowrap;
