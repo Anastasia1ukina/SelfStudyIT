@@ -8,7 +8,7 @@ export const AuthLayout = (props) => {
     <Stack direction="column">
       <Header></Header>
       <main>
-        <Box sx={{px: 6}}>{props.children}</Box>
+        <Box>{props.children}</Box>
       </main>
     </Stack>
   );

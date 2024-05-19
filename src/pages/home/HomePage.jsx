@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
 import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import { test } from "../../features/tests/FirstTest";
-import { BorderRight } from "@mui/icons-material";
+import homeMountain from "../../assets/mountain.svg";
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 const style = {
   position: "absolute",
@@ -21,6 +22,8 @@ const style = {
 
 export const HomePage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [top, setTop] = useState(0);
+  const [right, setRight] = useState(0);
   const [testFinished, setTestFinished] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -28,6 +31,19 @@ export const HomePage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const allQuestions = test.questions.length;
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    if (!imgRef.current) return;
+    const resizeObserver = new ResizeObserver((entries) => {
+      console.log(entries)
+      const {width, height} = entries[0].contentRect;
+      setTop(height * 0.22 + 168);
+      setRight(width * 0.43);
+    });
+    resizeObserver.observe(imgRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   const handleAnswer = (event) => {
     const optionId = parseInt(event.target.value);
@@ -63,7 +79,7 @@ export const HomePage = () => {
   if (testFinished) {
     return (
       <AuthLayout>
-        <Button onClick={handleOpen}>See result</Button>
+        {/* <Button onClick={handleOpen}>See result</Button> */}
         <Modal
           open={open}
           onClose={handleClose}
@@ -81,7 +97,7 @@ export const HomePage = () => {
 
   return (
     <AuthLayout>
-      <Button onClick={handleOpen}>Get tested</Button>
+      {/* <Button onClick={handleOpen}>Get tested</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -112,6 +128,15 @@ export const HomePage = () => {
           </Box>
         </Box>
       </Modal>
+      <Box sx={{
+        display: "flex",
+        marginTop: "10px",
+        width: "100%",
+        justifyContent: "flex-end"
+      }}>
+        <HomeRoundedIcon sx={{position: "absolute", top, right}} />
+        <img ref={imgRef} style={{ marginBottom: 0 }} width="90%" height="auto" src={homeMountain} alt="mountain" />
+      </Box>
     </AuthLayout>
   );
 };

@@ -14,7 +14,11 @@ import {
   createTheme,
   ThemeProvider,
 } from "@mui/material";
+import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import NewspaperRoundedIcon from '@mui/icons-material/NewspaperRounded';
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
 
 import { useContext } from "react";
 import { AuthContext } from "../../features/auth/AuthContext";
@@ -50,7 +54,7 @@ export const Header = () => {
         styleOverrides: {
           root: {
             textDecoration: "none",
-            color: "lightpink"
+            color: "black"
           },
         },
       },
@@ -73,7 +77,14 @@ export const Header = () => {
         sx={{ width: "80vw" }}>
         <Stack direction="row" sx={{ margin: "auto" }}>
           <Typography>// FRONT</Typography>
-          <Typography>streak 100 days</Typography>
+          <Typography
+            sx={{
+              textAlign: "center",
+              display: "flex",
+            }}>
+            <WhatshotRoundedIcon color="action" />
+            100 days
+          </Typography>
           <Typography>1000 xp</Typography>
         </Stack>
         <IconButton onClick={handleClick}>
@@ -111,21 +122,39 @@ export const Header = () => {
               </ListItem>
               <Divider></Divider>
               <ListItem>
-                <MuiLink href="/home">Home</MuiLink>
+                <MuiLink sx={{
+                  textAlign: "center",
+                  display: "flex",
+                  gap: "8px"
+                }} href="/home">
+                  <HomeRoundedIcon color="action" />
+                  Home
+                </MuiLink>
               </ListItem>
               <ListItem>
-                <MuiLink href="/dashboard">Dashboard</MuiLink>
+                <MuiLink sx={{
+                  textAlign: "center",
+                  display: "flex",
+                  gap: "8px"
+                }} href="/dashboard">
+                  <NewspaperRoundedIcon color="action" />
+                  Dashboard
+                </MuiLink>
               </ListItem>
               <ListItem>
-                <MuiLink href="#">About</MuiLink>
-              </ListItem>
-              <ListItem>
-                <MuiLink href="#">About</MuiLink>
+                <MuiLink sx={{
+                  textAlign: "center",
+                  display: "flex",
+                  gap: "8px"
+                }} href="#">
+                  <EmojiEventsRoundedIcon color="action" />
+                  Rating
+                </MuiLink>
               </ListItem>
             </List>
           </ThemeProvider>
         </Popover>
       </Stack>
-    </Stack>
+    </Stack >
   );
 };
