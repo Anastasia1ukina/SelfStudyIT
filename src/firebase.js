@@ -4,6 +4,7 @@ import {
   getAuth,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbeZ_RKH2WvK2RnRLDvH5SSLlDZIUmNa4",
@@ -17,14 +18,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 export const auth = getAuth(app);
-// auth.onAuthStateChanged(function (user) {
-//   if (user) {
-//    console.log(user, "firebase log")
-//   } else {
-//     console.log("no user")
-//   }
-// });
 export const provider = new GoogleAuthProvider();
 
 export default app;

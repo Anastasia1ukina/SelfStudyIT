@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
 import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
 import { test } from "../../features/tests/FirstTest";
-import homeMountain from "../../assets/mountain.svg";
+import homeMountain from "../../assets/mountain4.svg";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import { Quiz } from "../../components/QuizComponent/Quiz";
 
 const style = {
   position: "absolute",
@@ -37,8 +38,8 @@ export const HomePage = () => {
     if (!imgRef.current) return;
     const resizeObserver = new ResizeObserver((entries) => {
       console.log(entries)
-      const {width, height} = entries[0].contentRect;
-      setTop(height * 0.22 + 168);
+      const { width, height } = entries[0].contentRect;
+      setTop(height * 0.22 + 150);
       setRight(width * 0.43);
     });
     resizeObserver.observe(imgRef.current);
@@ -79,7 +80,7 @@ export const HomePage = () => {
   if (testFinished) {
     return (
       <AuthLayout>
-        {/* <Button onClick={handleOpen}>See result</Button> */}
+        <Button onClick={handleOpen}>See result</Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -97,7 +98,7 @@ export const HomePage = () => {
 
   return (
     <AuthLayout>
-      {/* <Button onClick={handleOpen}>Get tested</Button> */}
+      <Button onClick={handleOpen}>Get tested</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -128,14 +129,15 @@ export const HomePage = () => {
           </Box>
         </Box>
       </Modal>
+      <Quiz />
       <Box sx={{
         display: "flex",
         marginTop: "10px",
         width: "100%",
         justifyContent: "flex-end"
       }}>
-        <HomeRoundedIcon sx={{position: "absolute", top, right}} />
-        <img ref={imgRef} style={{ marginBottom: 0 }} width="90%" height="auto" src={homeMountain} alt="mountain" />
+        <HomeRoundedIcon sx={{ position: "absolute", top, right }} />
+        <img ref={imgRef} style={{ marginBottom: 0 }} width="95%" height="auto" src={homeMountain} alt="mountain" />
       </Box>
     </AuthLayout>
   );

@@ -62,99 +62,101 @@ export const Header = () => {
   });
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-      spacing={1}
-      sx={{ p: 6 }}
-    >
-      <TypeWriterText>
-        <Link to={"/"}>Self Study IT</Link>
-      </TypeWriterText>
+    <header>
       <Stack
         direction="row"
-        sx={{ width: "80vw" }}>
-        <Stack direction="row" sx={{ margin: "auto" }}>
-          <Typography>// FRONT</Typography>
-          <Typography
-            sx={{
-              textAlign: "center",
-              display: "flex",
-            }}>
-            <WhatshotRoundedIcon color="action" />
-            100 days
-          </Typography>
-          <Typography>1000 xp</Typography>
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={1}
+        sx={{ p: 5 }}
+      >
+        <TypeWriterText>
+          <Link to={"/"}>Self Study IT</Link>
+        </TypeWriterText>
+        <Stack
+          direction="row"
+          sx={{ width: "80vw" }}>
+          <Stack direction="row" sx={{ margin: "auto" }}>
+            <Typography>// FRONT</Typography>
+            <Typography
+              sx={{
+                textAlign: "center",
+                display: "flex",
+              }}>
+              <WhatshotRoundedIcon color="action" />
+              100 days
+            </Typography>
+            <Typography>1000 xp</Typography>
+          </Stack>
+          <IconButton onClick={handleClick}>
+            <ProfileAvatar width={56} height={56} />
+          </IconButton>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+          >
+            <ThemeProvider theme={theme}>
+              <List>
+                <ListItem sx={{ display: "block" }}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    component={Link}
+                    to="/profile"
+                  >
+                    <ProfileAvatar width={40} height={40} />
+                    <Box>
+                      <Typography variant="h6">Anna Hello</Typography>
+                      <Typography>{userEmail}</Typography>
+                    </Box>
+                    <IconButton onClick={resetAuth} type="submit" size="small">
+                      <LogoutIcon />
+                    </IconButton>
+                  </Stack>
+                </ListItem>
+                <Divider></Divider>
+                <ListItem>
+                  <MuiLink sx={{
+                    textAlign: "center",
+                    display: "flex",
+                    gap: "8px"
+                  }} href="/home">
+                    <HomeRoundedIcon color="action" />
+                    Home
+                  </MuiLink>
+                </ListItem>
+                <ListItem>
+                  <MuiLink sx={{
+                    textAlign: "center",
+                    display: "flex",
+                    gap: "8px"
+                  }} href="/dashboard">
+                    <NewspaperRoundedIcon color="action" />
+                    Dashboard
+                  </MuiLink>
+                </ListItem>
+                <ListItem>
+                  <MuiLink sx={{
+                    textAlign: "center",
+                    display: "flex",
+                    gap: "8px"
+                  }} href="#">
+                    <EmojiEventsRoundedIcon color="action" />
+                    Rating
+                  </MuiLink>
+                </ListItem>
+              </List>
+            </ThemeProvider>
+          </Popover>
         </Stack>
-        <IconButton onClick={handleClick}>
-          <ProfileAvatar width={56} height={56} />
-        </IconButton>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <List>
-              <ListItem sx={{ display: "block" }}>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  component={Link}
-                  to="/profile"
-                >
-                  <ProfileAvatar width={40} height={40} />
-                  <Box>
-                    <Typography variant="h6">Anna Hello</Typography>
-                    <Typography>{userEmail}</Typography>
-                  </Box>
-                  <IconButton onClick={resetAuth} type="submit" size="small">
-                    <LogoutIcon />
-                  </IconButton>
-                </Stack>
-              </ListItem>
-              <Divider></Divider>
-              <ListItem>
-                <MuiLink sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  gap: "8px"
-                }} href="/home">
-                  <HomeRoundedIcon color="action" />
-                  Home
-                </MuiLink>
-              </ListItem>
-              <ListItem>
-                <MuiLink sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  gap: "8px"
-                }} href="/dashboard">
-                  <NewspaperRoundedIcon color="action" />
-                  Dashboard
-                </MuiLink>
-              </ListItem>
-              <ListItem>
-                <MuiLink sx={{
-                  textAlign: "center",
-                  display: "flex",
-                  gap: "8px"
-                }} href="#">
-                  <EmojiEventsRoundedIcon color="action" />
-                  Rating
-                </MuiLink>
-              </ListItem>
-            </List>
-          </ThemeProvider>
-        </Popover>
-      </Stack>
-    </Stack >
+      </Stack >
+    </header>
   );
 };

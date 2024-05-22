@@ -52,14 +52,3 @@ const questions = [question, question2, question3]
 
 // Пример использования класса Test
 export const test = new Test({ questions });
-
-// export default new Test();
-
-// Получение следующего вопроса
-// console.log(test.nextQuestion());
-
-// Ответ на второй вопрос
-// test.answerQuestion({ value: 0, id: 1, optionId: 0 });
-
-// Получение результатов
-// console.log(test.getResult(), test);
