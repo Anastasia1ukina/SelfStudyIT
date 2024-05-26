@@ -26,6 +26,7 @@ import profileImage from "../../assets/fiona.jpg";
 import { Link } from "react-router-dom";
 import { TypeWriterText } from "../../components/typeWriterText/TypeWriterText";
 import { ProfileAvatar } from "../../pages/profile/ProfileAvatar";
+import { orange } from "@mui/material/colors";
 
 export const Header = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
@@ -68,7 +69,7 @@ export const Header = () => {
         justifyContent="space-between"
         alignItems="center"
         spacing={1}
-        sx={{ p: 5 }}
+        sx={{ p: "15px 30px" }}
       >
         <TypeWriterText>
           <Link to={"/"}>Self Study IT</Link>
@@ -76,17 +77,46 @@ export const Header = () => {
         <Stack
           direction="row"
           sx={{ width: "80vw" }}>
-          <Stack direction="row" sx={{ margin: "auto" }}>
-            <Typography>// FRONT</Typography>
+          <Stack direction="row"
+            sx={{
+              margin: "auto",
+              width: "70%",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}>
             <Typography
               sx={{
-                textAlign: "center",
-                display: "flex",
+                fontFamily: `"DrukWide", "Arial", sans-serif`,
+                letterSpacing: "0.15em",
+                backgroundColor: "rgba(241, 214, 238, 0.7)",
+                padding: "10px",
+                borderRadius: "15px",
+                cursor: "pointer"
               }}>
-              <WhatshotRoundedIcon color="action" />
-              100 days
-            </Typography>
-            <Typography>1000 xp</Typography>
+              // FRONT</Typography>
+            <Box sx={{
+              display: "flex",
+              gap: "8px",
+              alignItems: "center"
+            }}>
+              <WhatshotRoundedIcon sx={{ color: orange[500] }} />
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  display: "flex",
+                  fontFamily: `"DrukWide", "Arial", sans-serif`,
+                  letterSpacing: "0.15em",
+                }}>
+                1 day
+              </Typography>
+            </Box>
+            <Typography
+              sx={{
+                fontFamily: `"DrukWide", "Arial", sans-serif`,
+                letterSpacing: "0.15em",
+              }}
+            >
+              100 xp</Typography>
           </Stack>
           <IconButton onClick={handleClick}>
             <ProfileAvatar width={56} height={56} />
@@ -157,6 +187,6 @@ export const Header = () => {
           </Popover>
         </Stack>
       </Stack >
-    </header>
+    </header >
   );
 };

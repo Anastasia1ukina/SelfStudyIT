@@ -1,5 +1,5 @@
 import * as React from "react";
-import defaultProfileImage from "../../assets/fiona.jpg";
+import defaultProfileImage from "../../assets/profile.png";
 import { Avatar, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";

@@ -5,9 +5,9 @@ import { Header } from "./header/Header";
 export const AuthLayout = (props) => {
   console.log(props.children);
   return (
-    <Stack direction="column">
+    <Stack direction="column" height="100%">
       <Header></Header>
-      <main>
+      <main style={{marginTop: "auto", flex: "0 0 auto"}}>
         <Box>{props.children}</Box>
       </main>
     </Stack>
