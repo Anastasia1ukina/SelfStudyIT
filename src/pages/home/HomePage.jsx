@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
-import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
-import { test } from "../../features/tests/FirstTest";
+import { Box, Tooltip } from "@mui/material";
 import homeMountain from "../../assets/mountain8.svg";
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { Quiz } from "../../components/QuizComponent/Quiz";
+import { TooltipSection } from "../../components/TooltipSection/TooltipSection";
 
 const style = {
   position: "absolute",
@@ -23,17 +22,24 @@ const style = {
 
 export const HomePage = () => {
   const [top, setTop] = useState(0);
+  const [topCss, setTopCss] = useState(0);
   const [right, setRight] = useState(0);
+  const [rightCss, setRightCss] = useState(0);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
   const imgRef = useRef(null);
-  const flags = [{topOffSet: 0.79, rightOffSet: 0.85}, {topOffSet: 0.6, rightOffSet: 0.75}];
+  const flags = [{ topOffSet: 0.6, rightOffSet: 0.87 }, { topOffSet: 0.6, rightOffSet: 0.75 }];
 
   useEffect(() => {
     if (!imgRef.current) return;
     const resizeObserver = new ResizeObserver((entries) => {
-      console.log(entries)
-      const { width, height } = entries[0].contentRect;
-      setTop(height * 0.79);
-      setRight(width * 0.85);
+      const { width: currentWidth , height: currentHeight } = entries[0].contentRect;
+      setWidth(currentWidth)
+      setHeight(currentHeight)
+      setTop(height * flags[0].topOffSet);
+      setRight(width * flags[0].rightOffSet);
+      setTopCss(height * flags[1].topOffSet);
+      setRightCss(width * flags[1].rightOffSet);
     });
     resizeObserver.observe(imgRef.current);
     return () => resizeObserver.disconnect();
@@ -45,13 +51,12 @@ export const HomePage = () => {
       <Box sx={{
         display: "flex",
         justifyContent: "flex-end",
-        position: "relative", 
+        position: "relative",
         height: "auto"
       }}>
-          <button style={{position: "absolute", top, right}}>HTML</button>
-          {/* <button style={{position: "absolute", top, right}}>CSS</button> */}
-          <img ref={imgRef} style={{ marginBottom: 0 }} width="95%" height="auto" src={homeMountain} alt="mountain" />
-        {/* </div> */}
+        <TooltipSection fileName={"html.md"} top={top} right={right}>HTML</TooltipSection>
+        <TooltipSection fileName={"html.md"} top={topCss} right={rightCss}>CSS</TooltipSection>
+        <img ref={imgRef} style={{ marginBottom: 0 }} width="95%" height="auto" src={homeMountain} alt="mountain" />
       </Box>
     </AuthLayout>
   );
