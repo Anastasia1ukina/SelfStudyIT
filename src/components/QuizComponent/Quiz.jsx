@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Typography, Button, Modal, Box, Radio, FormControl, FormControlLabel, RadioGroup } from "@mui/material";
+import { Button, Modal, Box, createTheme, ThemeProvider } from "@mui/material";
 import { QuizQuestion } from "./QuizQuestion";
+import { deepPurple, purple } from "@mui/material/colors";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: deepPurple[500]
+    },
+  },
+});
 
 const style = {
   position: "absolute",
@@ -38,24 +47,26 @@ export const Quiz = () => {
   }, [])
 
   return (
-    <div>
-      <Button onClick={handleOpen}>Get tested</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          {quiz?.questions?.map((quizQuestion) => (
-            <QuizQuestion question={quizQuestion} key={quizQuestion.id} />
-          ))}
-          <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
-            <Button>BACK</Button>
-            <Button>NEXT</Button>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Button onClick={handleOpen}>Get tested</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {quiz?.questions?.map((quizQuestion) => (
+              <QuizQuestion question={quizQuestion} key={quizQuestion.id} />
+            ))}
+            <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
+              <Button>BACK</Button>
+              <Button>NEXT</Button>
+            </Box>
           </Box>
-        </Box>
-      </Modal>
-    </div>
+        </Modal>
+      </div>
+    </ThemeProvider>
   )
 }
