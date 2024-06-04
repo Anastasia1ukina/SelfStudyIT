@@ -14,6 +14,7 @@ export const ProfileAvatarForm = () => {
   const { user, auth } = useAuth()
   const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || "");
   const userEmail = authValue.email;
+  const userName = user?.displayName || "";
 
   const resetAuth = () => {
     setAuthValue(null);
@@ -107,7 +108,7 @@ export const ProfileAvatarForm = () => {
             );
           }}
         />
-        <Typography variant="h6">Anna Hello</Typography>
+        <Typography variant="h6">{userName}</Typography>
         <Typography>{userEmail}</Typography>
         {/* <Controller
         name="email"

@@ -39,21 +39,23 @@ export const SignupPage = () => {
 
   const onSubmit = async (data) => {
     console.log("React hook form data", data);
-    const { email, password } = data;
+    const { username, lastName, email, password } = data;
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        navigate("/login");
-        // ...
+        return user.updateProfile({
+          displayName: `${username} ${lastName}`
+        }).then(() => {
+          navigate("/login");
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        // ..
       });
   };
 
@@ -238,14 +240,3 @@ export const SignupPage = () => {
     </>
   );
 };
-
-// export const SignupPage = () => {
-//     const [isAuth, setIsAuth] = useAuth();
-//     return (
-//         <>
-//             <h1> Hello Signup Page!</h1>
-//             <Link href="/login">Login</Link>
-//             <AuthButton isAuth={isAuth} setIsAuth={setIsAuth} />
-//         </>
-//     );
-// }
