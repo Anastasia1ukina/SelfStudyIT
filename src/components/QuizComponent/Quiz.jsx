@@ -32,9 +32,18 @@ const style = {
 export const Quiz = () => {
   const [quiz, setQuiz] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleNextQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  }
+
+  const handlePreviousQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+  }
 
   const getQuiz = async () => {
     const quizSnapshot = await getDocs(collection(db, "quizes"));
@@ -57,12 +66,13 @@ export const Quiz = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            {quiz?.questions?.map((quizQuestion) => (
+            {/* {quiz?.questions?.map((quizQuestion) => (
               <QuizQuestion question={quizQuestion} key={quizQuestion.id} />
-            ))}
+            ))} */}
+            <QuizQuestion question={quiz?.questions[currentQuestionIndex]} />
             <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
-              <Button>BACK</Button>
-              <Button>NEXT</Button>
+              <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>BACK</Button>
+              <Button onClick={handleNextQuestion} disabled={quiz?.questions?.length-1 === currentQuestionIndex}>NEXT</Button>
             </Box>
           </Box>
         </Modal>
