@@ -27,10 +27,12 @@ import { Link } from "react-router-dom";
 import { TypeWriterText } from "../../components/typeWriterText/TypeWriterText";
 import { ProfileAvatar } from "../../pages/profile/ProfileAvatar";
 import { orange } from "@mui/material/colors";
+import useAuth from "../../hooks/useAuth";
 
 export const Header = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user, auth } = useAuth()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -48,6 +50,9 @@ export const Header = () => {
   };
 
   const userEmail = authValue.email;
+  const userName = user?.displayName || "Неопознанный жирафик";
+
+  console.log(user)
 
   const theme = createTheme({
     components: {
@@ -143,7 +148,7 @@ export const Header = () => {
                   >
                     <ProfileAvatar width={40} height={40} />
                     <Box>
-                      <Typography variant="h6">Anna Hello</Typography>
+                      <Typography variant="h6">{userName}</Typography>
                       <Typography>{userEmail}</Typography>
                     </Box>
                     <IconButton onClick={resetAuth} type="submit" size="small">

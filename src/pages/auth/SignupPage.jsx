@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, Controller } from "react-hook-form";
 import { PasswordField } from "./PasswordField";
 import { Button } from "@mui/material";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 import Stack from "@mui/material/Stack";
 
@@ -46,7 +46,7 @@ export const SignupPage = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        return user.updateProfile({
+        return updateProfile(user, {
           displayName: `${username} ${lastName}`
         }).then(() => {
           navigate("/login");
