@@ -11,8 +11,14 @@ import "./index.css";
 import AppRouter from "./AppRouter/AppRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { deepPurple } from "@mui/material/colors";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: deepPurple[500]
+    },
+  },
   components: {
     MuiPopover: {
       styleOverrides: {

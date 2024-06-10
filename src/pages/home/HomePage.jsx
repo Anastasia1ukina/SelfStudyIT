@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { AuthLayout } from "../../layout/AuthLayout";
 import { Box, Tooltip } from "@mui/material";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 import homeMountain from "../../assets/mountain9.svg";
 import { Quiz } from "../../components/QuizComponent/Quiz";
 import { TooltipSection } from "../../components/TooltipSection/TooltipSection";
@@ -38,8 +40,16 @@ const flagOffsets = [
 export const HomePage = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const imgRef = useRef(null);
+  const [quiz, setQuiz] = useState(null);
+
+  const getQuiz = async () => {
+    const quizSnapshot = await getDocs(collection(db, "quizes"));
+    const quizData = quizSnapshot.docs.map(doc => doc.data());
+    setQuiz(quizData[0]);
+  }
 
   useEffect(() => {
+    getQuiz();
     if (!imgRef.current) return;
 
     const updateDimensions = () => {
@@ -57,7 +67,7 @@ export const HomePage = () => {
 
   return (
     <AuthLayout>
-      <Quiz />
+      {quiz && <Quiz quiz={quiz} />}
       <Box sx={{
         display: "flex",
         justifyContent: "flex-end",

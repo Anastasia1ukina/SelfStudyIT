@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import { Button, Modal, Box, createTheme, ThemeProvider } from "@mui/material";
+import React, { useState } from "react";
+import { Button, Modal, Box } from "@mui/material";
 import { QuizQuestion } from "./QuizQuestion";
-import { deepPurple } from "@mui/material/colors";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: deepPurple[500]
-    },
-  },
-});
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -29,8 +19,13 @@ const style = {
   borderRadius: 8
 };
 
-export const Quiz = () => {
-  const [quiz, setQuiz] = useState(null);
+export const Quiz = ({ quiz }) => {
+  const form = useForm({
+    defaultValues: quiz?.questions?.reduce((formValues, questionItem) => {
+      return {...formValues, [questionItem.id]: ""}
+    }, {}) ,
+  });
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [open, setOpen] = useState(false);
@@ -45,38 +40,30 @@ export const Quiz = () => {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
   }
 
-  const getQuiz = async () => {
-    const quizSnapshot = await getDocs(collection(db, "quizes"));
-    const quizData = quizSnapshot.docs.map(doc => doc.data());
-    setQuiz(quizData[0]);
+  const handleSubmit = (data) => {
+    console.log(data, "submittest");
   }
 
-  useEffect(() => {
-    getQuiz();
-  }, [])
-
   return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Button onClick={handleOpen}>Get tested</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            {/* {quiz?.questions?.map((quizQuestion) => (
-              <QuizQuestion question={quizQuestion} key={quizQuestion.id} />
-            ))} */}
-            <QuizQuestion question={quiz?.questions[currentQuestionIndex]} />
-            <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
+    <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <Button onClick={handleOpen}>Get tested</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <QuizQuestion control={form.control} question={quiz?.questions[currentQuestionIndex]} />
+          <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
+            <Box>
               <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>BACK</Button>
-              <Button onClick={handleNextQuestion} disabled={quiz?.questions?.length-1 === currentQuestionIndex}>NEXT</Button>
+              <Button onClick={handleNextQuestion} disabled={quiz?.questions?.length - 1 === currentQuestionIndex}>NEXT</Button>
             </Box>
+            <Button onClick={form.handleSubmit(handleSubmit)} type="submit">FINISH</Button>
           </Box>
-        </Modal>
-      </div>
-    </ThemeProvider>
+        </Box>
+      </Modal>
+    </form>
   )
 }
