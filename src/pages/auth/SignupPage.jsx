@@ -16,11 +16,31 @@ import { Button } from "@mui/material";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 import Stack from "@mui/material/Stack";
+import bgImage from "../../assets/bg-signup.jpg";
+import { gsap } from "gsap";
+import stylesSignUp from "./signUpPage.module.css";
+import { orange } from "@mui/material/colors";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: orange[800]
+    },
+  },
+});
 
 export const SignupPage = () => {
+  const titleRef = React.useRef(null);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    gsap.to(titleRef.current, {
+      duration: 2,
+      opacity: 1,
+      ease: 'power2.inOut',
+      scale: 1
+    });
+  }, []);
 
   const {
     control,
@@ -69,8 +89,9 @@ export const SignupPage = () => {
             sm={false}
             md={6}
             sx={{
+              position: "relative",
               backgroundImage:
-                "url(https://source.unsplash.com/random?wallpapers)",
+                `url(${bgImage})`,
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
                 t.palette.mode === "light"
@@ -79,7 +100,11 @@ export const SignupPage = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          />
+          >
+            <div className={stylesSignUp.title} ref={titleRef}>
+              Self Study IT 🎓
+            </div>
+          </Grid>
           <Grid
             item
             xs={12}
@@ -96,7 +121,7 @@ export const SignupPage = () => {
               spacing={2}
               height={"100vh"}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
+              <Avatar sx={{ m: 1, bgcolor: orange[800] }}></Avatar>
               <Typography component="h1">Sign up</Typography>
               <Box
                 component="form"

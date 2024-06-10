@@ -27,13 +27,33 @@ import { useLocalStorage } from "../../features/utils/useLocalStorage";
 import { useContext } from "react";
 import { AuthContext } from "../../features/auth/AuthContext";
 import { GoogleButton } from "react-google-button";
+import bgImage from "../../assets/bg-pages.jpg";
+import { gsap } from "gsap";
+import { deepPurple } from "@mui/material/colors";
+import stylesLogin from "./loginPage.module.css";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: deepPurple[500]
+    },
+  },
+});
 
 export const LoginPage = () => {
+  const titleRef = React.useRef(null);
   const navigate = useNavigate();
   const { authValue, setAuthValue } = useContext(AuthContext);
   const [showPassword, setShowPassword] = React.useState(false);
+
+  React.useEffect(() => {
+    gsap.to(titleRef.current, {
+      duration: 2,
+      opacity: 1,
+      ease: 'power2.inOut',
+      scale: 1
+    });
+  }, []);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -98,8 +118,9 @@ export const LoginPage = () => {
             sm={false}
             md={6}
             sx={{
+              position: "relative",
               backgroundImage:
-                "url(https://source.unsplash.com/random?wallpapers)",
+                `url(${bgImage})`,
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
                 t.palette.mode === "light"
@@ -108,7 +129,10 @@ export const LoginPage = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          />
+          ><div className={stylesLogin.title} ref={titleRef}>
+              Self Study IT 🎓
+            </div>
+          </Grid>
           <Grid
             item
             xs={12}

@@ -3,7 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Button, Modal, Box, createTheme, ThemeProvider } from "@mui/material";
 import { QuizQuestion } from "./QuizQuestion";
-import { deepPurple, purple } from "@mui/material/colors";
+import { deepPurple } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
