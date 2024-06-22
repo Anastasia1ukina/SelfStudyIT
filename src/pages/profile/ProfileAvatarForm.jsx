@@ -11,7 +11,7 @@ import { ProfileAvatar } from "./ProfileAvatar";
 
 export const ProfileAvatarForm = () => {
   const { authValue, setAuthValue } = useContext(AuthContext);
-  const { user, auth } = useAuth()
+  const { user, auth } = useAuth();
   const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || "");
   const userEmail = authValue.email;
   const userName = user?.displayName || "";

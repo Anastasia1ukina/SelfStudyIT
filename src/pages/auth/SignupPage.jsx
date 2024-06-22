@@ -20,6 +20,12 @@ import bgImage from "../../assets/bg-signup.jpg";
 import { gsap } from "gsap";
 import stylesSignUp from "./signUpPage.module.css";
 import { orange } from "@mui/material/colors";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { GoogleButton } from "react-google-button";
 
 const defaultTheme = createTheme({
   palette: {
@@ -57,6 +63,26 @@ export const SignupPage = () => {
     },
   });
 
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((userCredential) => {
+        const { user } = GoogleAuthProvider.credentialFromResult(userCredential);
+
+        setAuthValue({
+          token: user.stsTokenManager.accessToken,
+          email: user.email,
+          uid: user.uid,
+          name: user.displayName,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
+
   const onSubmit = async (data) => {
     console.log("React hook form data", data);
     const { username, lastName, email, password } = data;
@@ -73,6 +99,25 @@ export const SignupPage = () => {
         });
       })
       .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+
+        setAuthValue({
+          token: user.accessToken,
+          email: user.email,
+          uid: user.uid,
+        });
+        console.log(user);
+      })
+      .catch((error) => {
+        alert("Неверный логин или пароль");
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -257,6 +302,12 @@ export const SignupPage = () => {
                 >
                   Sign Up
                 </Button>
+                <Grid container style={{
+                  marginTop: 10,
+                  justifyContent: "center"
+                }}>
+                  <GoogleButton onClick={googleSignIn} type="light" />
+                </Grid>
               </Box>
             </Stack>
           </Grid>

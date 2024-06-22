@@ -10,6 +10,7 @@ export const QuizQuestion = ({ question, control }) => {
   };
 
   if (question) {
+    console.log(question.options, "fff")
     return (
       <Controller
         name={question.id}
@@ -20,10 +21,10 @@ export const QuizQuestion = ({ question, control }) => {
             <Typography variant="h5">{question.question}</Typography>
             <FormControl component="fieldset">
               <RadioGroup {...field}>
-                {question.options.map((option, index) => (
+                {question.options.map((option) => (
                   <FormControlLabel
-                    key={index}
-                    value={index.toString()}
+                    key={option.id}
+                    value={option.id}
                     control={<Radio />}
                     label={option.label}
                   />

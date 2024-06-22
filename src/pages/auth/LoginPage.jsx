@@ -80,7 +80,6 @@ export const LoginPage = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        // const credential = GoogleAuthProvider.credentialFromError(error);
       });
   };
 

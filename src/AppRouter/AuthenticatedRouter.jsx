@@ -8,6 +8,7 @@ import {
 import { HomePage } from "../pages/home/HomePage";
 import { ProfilePage } from "../pages/profile/ProfilePage";
 import { AuthLayout } from "../layout/AuthLayout";
+import { DashboardPage } from "../pages/dashboard/DashboardPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,7 +17,7 @@ const router = createBrowserRouter(
       <Route path="home" element={<HomePage />} />
       <Route path="profile" element={<ProfilePage />} />
 
-      <Route path="dashboard" element={<HomePage />} />
+      <Route path="dashboard" element={<DashboardPage />} />
       <Route path="*" element={<Navigate to="/home" />} />
     </Route>
   )

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import { QuizQuestion } from "./QuizQuestion";
 import { useForm } from "react-hook-form";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import useAuth from "../../hooks/useAuth";
 
 const style = {
   position: "absolute",
@@ -22,10 +25,11 @@ const style = {
 export const Quiz = ({ quiz }) => {
   const form = useForm({
     defaultValues: quiz?.questions?.reduce((formValues, questionItem) => {
-      return {...formValues, [questionItem.id]: ""}
-    }, {}) ,
+      return { ...formValues, [questionItem.id]: "" }
+    }, {}),
   });
 
+  const { user } = useAuth();
   const [selectedOption, setSelectedOption] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [open, setOpen] = useState(false);
@@ -40,8 +44,40 @@ export const Quiz = ({ quiz }) => {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
   }
 
-  const handleSubmit = (data) => {
-    console.log(data, "submittest");
+  const getQuizAnswers = async () => {
+    const docRef = doc(db, "quizResults", quiz.id, user.uid, "xJi8rTvOlXLFvxd2yKSL");
+    const docSnap = await getDoc(docRef);
+
+    // const quizResultsRef = collection(db, "quizResults");
+    // const docSnap = await getDoc(collection(quizResultsRef, quiz.id, user.uid));
+
+    const querySnapshot = await getDocs(collection(db, "quizResults", quiz.id, user.uid));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      console.log("Document data:", documentData);
+      return documentData;
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+  useEffect(() => {
+    getQuizAnswers()
+  }, [])
+
+  const handleSubmit = async (data) => {
+    const quizResultsRef = collection(db, "quizResults");
+    console.log(data, "submittest", user, quiz);
+    await addDoc(collection(quizResultsRef, quiz.id, user.uid), {
+      answers: data,
+      userId: user.uid,
+    });
   }
 
   return (
@@ -55,7 +91,7 @@ export const Quiz = ({ quiz }) => {
       >
         <Box sx={style}>
           <QuizQuestion control={form.control} question={quiz?.questions[currentQuestionIndex]} />
-          <Box sx={{ marginTop: "auto", flex: "0 0 auto" }}>
+          <Box sx={{ marginTop: "auto", flex: "0 0 auto", display: "flex", justifyContent: "space-between" }}>
             <Box>
               <Button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>BACK</Button>
               <Button onClick={handleNextQuestion} disabled={quiz?.questions?.length - 1 === currentQuestionIndex}>NEXT</Button>
